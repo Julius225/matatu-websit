@@ -1,0 +1,17 @@
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+
+# Local database exports and runtime files
+*.sql.gz
+*.dump
+*.log
+
+# Machine-specific editor and MCP configuration
+.vscode/mcp.json
+
+# Common local dependencies and generated files
+vendor/
+node_modules/
+*.cache

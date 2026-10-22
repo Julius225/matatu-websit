@@ -1,0 +1,16 @@
+# SafariFlow MVP
+
+The MVP provides a MySQL schema, one-time platform-owner setup, secure sign-in/sign-out, and role-gated dashboards. The platform-owner dashboard can create SACCOs together with their first administrator, view organization and staff totals, and activate or suspend SACCOs. SACCO administrators can create and deactivate dispatcher/marshal accounts, register and activate vehicles, configure routes and fares, and review date-filtered operational reports with CSV export. Dispatchers can schedule a vehicle on an active route, start boarding, see passenger queue counts refreshed every 15 seconds, mark a vehicle departed, cancel a departure, and view operational reports. Passengers can join an open boarding queue, see their queue position, and cancel or rejoin while boarding remains open. Marshals can register existing active passengers by email for departures currently boarding. Queue registrations are limited to the vehicle's passenger capacity. Suspended SACCO staff cannot sign in or continue using an existing session. Subscriptions are not implemented yet.
+
+## Run locally with XAMPP
+
+1. Place this folder at `C:\xampp\htdocs\safariflow`.
+2. Start Apache and MySQL in the XAMPP Control Panel.
+3. In phpMyAdmin, import `database/schema.sql`. The import creates the `safariflow` database and its tables. If you already installed an earlier version, import the updated schema again to create any missing vehicles, routes, departures, and passenger queue tables; existing data is preserved.
+4. If your MySQL settings differ from the XAMPP defaults, set `SAFARIFLOW_DB_HOST`, `SAFARIFLOW_DB_NAME`, `SAFARIFLOW_DB_USER`, and `SAFARIFLOW_DB_PASSWORD` in Apache's environment.
+5. Before opening setup, configure `SAFARIFLOW_SETUP_TOKEN` in Apache's environment with a randomly generated secret of at least 32 characters. Keep it out of the project files and source control. Open this project's URL ending in `/setup.php`, enter the token, and create the platform-owner account with a password of at least 12 characters. For this workspace location, use `http://localhost/matatu%20websit/safariflow/setup.php`. Setup is disabled after the first user exists; remove the token from Apache's environment once setup is complete.
+6. Sign in at the same project URL ending in `/login.php`. If you move the folder directly into `htdocs`, the URLs become `http://localhost/safariflow/setup.php` and `http://localhost/safariflow/login.php`.
+
+The default database connection is for local XAMPP only (`127.0.0.1`, database `safariflow`, MySQL user `root` with an empty password). Configure a dedicated database user and password before deploying anywhere beyond a local development machine. Do not use real passenger information until the pilot's privacy and access controls are in place.
+
+SACCOs and their first administrator can be created from the platform-owner dashboard. The administrator’s initial password is set during creation; share it securely and ask them to change it. SACCO administrators can create dispatcher and marshal accounts from their dashboard; they can also register vehicles and routes. Dispatchers can schedule and update departures using those active routes and vehicles. Share staff initial passwords securely.
